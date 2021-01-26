@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping(value = "/admin/users")
 public class UserController {
@@ -39,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/update")
-    public String editUser(@ModelAttribute SystemUser systemUser) {
+    public String editUser(@ModelAttribute @Valid SystemUser systemUser) {
         userService.save(systemUser);
         return "redirect:/admin/users";
     }

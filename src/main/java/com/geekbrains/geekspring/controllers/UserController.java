@@ -6,6 +6,7 @@ import com.geekbrains.geekspring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +42,12 @@ public class UserController {
     }
 
     @PostMapping(value = "/update")
-    public String editUser(@ModelAttribute @Valid SystemUser systemUser) {
+    public String editUser(@ModelAttribute @Valid SystemUser systemUser, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("user", systemUser);
+            model.addAttribute("roles", roleService.findAll());
+            return "user_edit";
+        }
         userService.save(systemUser);
         return "redirect:/admin/users";
     }

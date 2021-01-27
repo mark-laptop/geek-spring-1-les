@@ -21,6 +21,7 @@
             <div style="padding-top: 30px" class="panel-body">
                 <form th:action="@{/admin/users/update}" method="POST" th:object="${user}" class="form-horizontal">
                     <input hidden type="number" name="id" th:field="${user.id}">
+
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon">Username</span>
                         <input type="text" name="username" placeholder="Username" class="form-control"
@@ -36,11 +37,13 @@
                         <input type="text" name="lastName" placeholder="Last name" class="form-control"
                                th:field="${user.lastName}">
                     </div>
+
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon">Password</span>
                         <input type="password" name="password" placeholder="Password" class="form-control"
                                th:field="${user.password}">
                     </div>
+
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon">Repeat password</span>
                         <input type="password" name="repeatPassword" placeholder="Password" class="form-control"

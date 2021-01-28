@@ -19,14 +19,14 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private DataSource dataSource;
+//    private DataSource dataSource;
     private UserService userService;
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
-    @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+//    @Autowired
+//    public void setDataSource(DataSource dataSource) {
+//        this.dataSource = dataSource;
+//    }
 
     @Autowired
     public void setUserService(UserService userService) {

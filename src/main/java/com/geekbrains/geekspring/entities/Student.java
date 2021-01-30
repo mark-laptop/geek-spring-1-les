@@ -1,5 +1,8 @@
 package com.geekbrains.geekspring.entities;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -7,6 +10,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "students")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Student {
     @Id
     @Column(name = "id")
@@ -24,33 +30,6 @@ public class Student {
     )
     @Cascade({org.hibernate.annotations.CascadeType.DELETE, org.hibernate.annotations.CascadeType.DETACH})
     private List<Course> courses;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    public Student() {
-    }
 
     @Override
     public String toString() {

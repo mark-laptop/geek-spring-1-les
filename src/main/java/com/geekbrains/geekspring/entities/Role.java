@@ -1,11 +1,13 @@
 package com.geekbrains.geekspring.entities;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "roles")
 public class Role {
 	@Id
@@ -15,9 +17,6 @@ public class Role {
 
 	@Column(name = "name")
 	private String name;
-
-	public Role() {
-	}
 
 	public Role(String name) {
 		this.name = name;

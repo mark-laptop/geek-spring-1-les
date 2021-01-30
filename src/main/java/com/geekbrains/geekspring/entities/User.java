@@ -1,12 +1,14 @@
 package com.geekbrains.geekspring.entities;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "users")
 public class User {
 	@Id
@@ -34,9 +36,6 @@ public class User {
 	joinColumns = @JoinColumn(name = "user_id"),
 	inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Collection<Role> roles;
-
-	public User() {
-	}
 
 	public User(String userName, String password, String firstName, String lastName, String email) {
 		this.userName = userName;

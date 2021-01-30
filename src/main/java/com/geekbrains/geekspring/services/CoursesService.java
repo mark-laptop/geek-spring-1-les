@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Service
 public class CoursesService {
+
     private CoursesRepository coursesRepository;
 
     @Autowired
@@ -23,9 +24,6 @@ public class CoursesService {
 
     public Course getCourseById(Long id) {
         Optional<Course> course = coursesRepository.findById(id);
-        if (course.isPresent()) {
-            return course.get();
-        }
-        return null;
+        return course.orElse(null);
     }
 }

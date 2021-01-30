@@ -1,5 +1,6 @@
 package com.geekbrains.geekspring.entities;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import java.util.Collection;
 @Entity
 @Data
 @NoArgsConstructor
+@Builder
 @Table(name = "users")
 public class User {
 	@Id

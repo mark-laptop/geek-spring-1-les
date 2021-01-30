@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,16 +49,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void save(SystemUser systemUser) {
-		User user = new User();
-		user.setId(systemUser.getId());
-		user.setUserName(systemUser.getUserName());
-		user.setPassword(passwordEncoder.encode(systemUser.getPassword()));
-		user.setFirstName(systemUser.getFirstName());
-		user.setLastName(systemUser.getLastName());
-		user.setEmail(systemUser.getEmail());
-
-		user.setRoles(systemUser.getRoles());
-
+		User user = toUser(systemUser);
 		userRepository.save(user);
 	}
 
@@ -84,16 +74,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-		User user = userRepository.findOneByUserName(userName);
-		if (user == null) {
-			throw new UsernameNotFoundException("Invalid username or password.");
-		}
+		User user = userRepository.findOneByUserName(userName).orElseThrow(() ->
+				new UsernameNotFoundException("Invalid username or password."));
 		return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
 				mapRolesToAuthorities(user.getRoles()));
 	}
 
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toSet());
 	}
 
 	private SystemUser toSystemUser(User user) {
@@ -104,6 +92,17 @@ public class UserServiceImpl implements UserService {
 				.lastName(user.getLastName())
 				.email(user.getEmail())
 				.roles(user.getRoles())
+				.build();
+	}
+
+	private User toUser(SystemUser systemUser) {
+		return User.builder()
+				.id(systemUser.getId())
+				.userName(systemUser.getUserName())
+				.firstName(systemUser.getFirstName())
+				.lastName(systemUser.getLastName())
+				.email(systemUser.getEmail())
+				.roles(systemUser.getRoles())
 				.build();
 	}
 }
